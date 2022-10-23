@@ -1,0 +1,12 @@
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\bin\Debug\tema2.exe.config
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\bin\Debug\tema2.exe
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\bin\Debug\tema2.pdb
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\bin\Debug\OpenTK.dll
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\bin\Debug\OpenTK.GLControl.dll
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\bin\Debug\OpenTK.xml
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\bin\Debug\OpenTK.GLControl.xml
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\obj\Debug\tema2.csproj.AssemblyReference.cache
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\obj\Debug\tema2.csproj.CoreCompileInputs.cache
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\obj\Debug\tema2.csproj.CopyComplete
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\obj\Debug\tema2.exe
+D:\AN 3\Elemente de grafica pe calculator\laborator\Teme\tema2\tema2\obj\Debug\tema2.pdb
