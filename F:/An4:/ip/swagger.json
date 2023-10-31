@@ -1,14 +1,14 @@
 {
   "openapi" : "3.0.0",
-  "servers" : [ {
-    "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/DANIELAONICA/CSU_Suceava/1.0.0"
-  } ],
   "info" : {
     "version" : "1.0.0",
     "title" : "CSU Suceava",
     "description" : "API of the CSU Suceava website"
   },
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/DANIELAONICA/CSU_Suceava/1.0.0"
+  } ],
   "tags" : [ {
     "name" : "user",
     "description" : "Operations about the user's account"
@@ -91,6 +91,102 @@
           }
         }
       }
+    },
+    "/admin/accounts" : {
+      "get" : {
+        "tags" : [ "admin" ],
+        "summary" : "Lists all of the user accounts",
+        "operationId" : "listUserAccounts",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserAccountsResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid request"
+          }
+        }
+      }
+    },
+    "/admin/{username}/update" : {
+      "put" : {
+        "tags" : [ "admin" ],
+        "summary" : "Update an user account",
+        "operationId" : "UpdateAccount",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The username of the account",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "description" : "The password for login in clear text",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "usertype",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "User information for account update",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserCreateRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid request"
+          }
+        }
+      }
+    },
+    "/admin/{username}/delete" : {
+      "delete" : {
+        "tags" : [ "admin" ],
+        "summary" : "Delete an user account",
+        "operationId" : "DeleteAccount",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The username of the account",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid request"
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -121,6 +217,27 @@
             "description" : "Will always be normal",
             "example" : "Normal"
           }
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "type" : "string",
+            "description" : "The username of the account",
+            "example" : "sorin.lungu@test.com"
+          },
+          "usertype" : {
+            "type" : "string",
+            "description" : "The type of the account of the user",
+            "example" : "Creator de continut"
+          }
+        }
+      },
+      "UserAccountsResponse" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/User"
         }
       }
     }
