@@ -781,10 +781,6 @@
       "Jucator" : {
         "type" : "object",
         "properties" : {
-          "JucatorID" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
           "Nume" : {
             "type" : "string",
             "maxLength" : 50
