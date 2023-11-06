@@ -92,6 +92,49 @@
         }
       }
     },
+    "/{username}/resetpassword" : {
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Reset user password",
+        "operationId" : "UserResetPassword",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The username of the account",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "required" : true,
+          "description" : "The new password for the account in clear text",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "User information for password reset",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ResetPassword"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid request"
+          }
+        }
+      }
+    },
     "/admin/accounts" : {
       "get" : {
         "tags" : [ "admin" ],
@@ -128,17 +171,9 @@
             "type" : "string"
           }
         }, {
-          "name" : "password",
-          "in" : "query",
-          "description" : "The password for login in clear text",
-          "required" : false,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
           "name" : "usertype",
           "in" : "query",
-          "required" : false,
+          "required" : true,
           "schema" : {
             "type" : "string"
           }
@@ -149,7 +184,50 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/UserCreateRequest"
+                "$ref" : "#/components/schemas/UserUpdateType"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid request"
+          }
+        }
+      }
+    },
+    "/admin/{username}/resetpassword" : {
+      "put" : {
+        "tags" : [ "admin" ],
+        "summary" : "Reset an users password",
+        "operationId" : "AdminResetPassword",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The username of the account",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "required" : true,
+          "description" : "The new password for the account in clear text",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "User information for password reset",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ResetPassword"
               }
             }
           }
@@ -216,6 +294,36 @@
             "type" : "string",
             "description" : "Will always be normal",
             "example" : "Normal"
+          }
+        }
+      },
+      "UserUpdateType" : {
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "type" : "string",
+            "description" : "The username for the new user",
+            "example" : "sorin.lungu@test.com"
+          },
+          "usertype" : {
+            "type" : "string",
+            "description" : "The type of the user's account",
+            "example" : "Creator de continut"
+          }
+        }
+      },
+      "ResetPassword" : {
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "type" : "string",
+            "description" : "The username of the user",
+            "example" : "sorin.lungu@test.com"
+          },
+          "password" : {
+            "type" : "string",
+            "description" : "The new password for the account in clear text",
+            "example" : "12345"
           }
         }
       },
