@@ -10,6 +10,9 @@
     "url" : "https://virtserver.swaggerhub.com/DANIELAONICA/CSU_Suceava/1.0.0"
   } ],
   "tags" : [ {
+    "name" : "news",
+    "description" : "Operations about the news"
+  }, {
     "name" : "user",
     "description" : "Operations about the user's account"
   }, {
@@ -17,6 +20,132 @@
     "description" : "Operations of an admin account"
   } ],
   "paths" : {
+    "/news" : {
+      "get" : {
+        "tags" : [ "news" ],
+        "summary" : "Get All News",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/NewsItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "news" ],
+        "summary" : "Create a News Article",
+        "description" : "Only the \"Creator de continut\" and \"Administrator\" have access to this function",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewsItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "News Article created successfully"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/news/{StireID}" : {
+      "parameters" : [ {
+        "name" : "StireID",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      } ],
+      "get" : {
+        "tags" : [ "news" ],
+        "summary" : "Get a News Article by ID",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewsItem"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "News Article not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "news" ],
+        "summary" : "Update a News Article by ID",
+        "parameters" : [ {
+          "name" : "StireID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewsItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "News Article updated successfully"
+          },
+          "404" : {
+            "description" : "News Article not found"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "news" ],
+        "summary" : "Delete a News Article by ID",
+        "parameters" : [ {
+          "name" : "StireID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "News Article deleted successfully"
+          },
+          "404" : {
+            "description" : "News Article not found"
+          }
+        }
+      }
+    },
     "/user/signup" : {
       "post" : {
         "tags" : [ "user" ],
@@ -346,6 +475,26 @@
         "type" : "array",
         "items" : {
           "$ref" : "#/components/schemas/User"
+        }
+      },
+      "NewsItem" : {
+        "type" : "object",
+        "properties" : {
+          "DataPublicarii" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "Titlu" : {
+            "type" : "string",
+            "maxLength" : 120
+          },
+          "Continut" : {
+            "type" : "string"
+          },
+          "IsDeleted" : {
+            "type" : "boolean",
+            "default" : false
+          }
         }
       }
     }
