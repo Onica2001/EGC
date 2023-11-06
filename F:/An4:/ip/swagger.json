@@ -10,8 +10,14 @@
     "url" : "https://virtserver.swaggerhub.com/DANIELAONICA/CSU_Suceava/1.0.0"
   } ],
   "tags" : [ {
-    "name" : "news",
-    "description" : "Operations about the news"
+    "name" : "jucatori",
+    "description" : "Operations for players content"
+  }, {
+    "name" : "stiri",
+    "description" : "Operations for news content"
+  }, {
+    "name" : "media",
+    "description" : "Operations for media content"
   }, {
     "name" : "user",
     "description" : "Operations about the user's account"
@@ -20,9 +26,134 @@
     "description" : "Operations of an admin account"
   } ],
   "paths" : {
+    "/jucatori" : {
+      "get" : {
+        "tags" : [ "jucatori" ],
+        "summary" : "Get All Players",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Jucator"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "jucatori" ],
+        "summary" : "Create a Player",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Jucator"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Player created successfully"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/jucatori/{JucatorID}" : {
+      "parameters" : [ {
+        "name" : "JucatorID",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      } ],
+      "get" : {
+        "tags" : [ "jucatori" ],
+        "summary" : "Get a Player by ID",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Jucator"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Player not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "jucatori" ],
+        "summary" : "Update a Player by ID",
+        "parameters" : [ {
+          "name" : "JucatorID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Jucator"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Player updated successfully"
+          },
+          "404" : {
+            "description" : "Player not found"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "jucatori" ],
+        "summary" : "Delete a Player by ID",
+        "parameters" : [ {
+          "name" : "JucatorID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Player deleted successfully"
+          },
+          "404" : {
+            "description" : "Player not found"
+          }
+        }
+      }
+    },
     "/news" : {
       "get" : {
-        "tags" : [ "news" ],
+        "tags" : [ "stiri" ],
         "summary" : "Get All News",
         "responses" : {
           "200" : {
@@ -32,7 +163,18 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/NewsItem"
+                    "allOf" : [ {
+                      "$ref" : "#/components/schemas/NewsItem"
+                    }, {
+                      "properties" : {
+                        "Media" : {
+                          "type" : "array",
+                          "items" : {
+                            "$ref" : "#/components/schemas/MediaItem"
+                          }
+                        }
+                      }
+                    } ]
                   }
                 }
               }
@@ -41,7 +183,7 @@
         }
       },
       "post" : {
-        "tags" : [ "news" ],
+        "tags" : [ "stiri" ],
         "summary" : "Create a News Article",
         "description" : "Only the \"Creator de continut\" and \"Administrator\" have access to this function",
         "requestBody" : {
@@ -74,7 +216,7 @@
         }
       } ],
       "get" : {
-        "tags" : [ "news" ],
+        "tags" : [ "stiri" ],
         "summary" : "Get a News Article by ID",
         "responses" : {
           "200" : {
@@ -82,7 +224,18 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NewsItem"
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/NewsItem"
+                  }, {
+                    "properties" : {
+                      "Media" : {
+                        "type" : "array",
+                        "items" : {
+                          "$ref" : "#/components/schemas/MediaItem"
+                        }
+                      }
+                    }
+                  } ]
                 }
               }
             }
@@ -93,7 +246,7 @@
         }
       },
       "put" : {
-        "tags" : [ "news" ],
+        "tags" : [ "stiri" ],
         "summary" : "Update a News Article by ID",
         "parameters" : [ {
           "name" : "StireID",
@@ -126,7 +279,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "news" ],
+        "tags" : [ "stiri" ],
         "summary" : "Delete a News Article by ID",
         "parameters" : [ {
           "name" : "StireID",
@@ -142,6 +295,98 @@
           },
           "404" : {
             "description" : "News Article not found"
+          }
+        }
+      }
+    },
+    "/media" : {
+      "get" : {
+        "tags" : [ "media" ],
+        "summary" : "Get All Media",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MediaItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "media" ],
+        "summary" : "Upload Media for a News Article",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MediaUpload"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Media uploaded successfully"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/media/{MediaID}" : {
+      "parameters" : [ {
+        "name" : "MediaID",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      } ],
+      "get" : {
+        "tags" : [ "media" ],
+        "summary" : "Get Media by ID",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MediaItem"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Media not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "media" ],
+        "summary" : "Delete Media by ID",
+        "parameters" : [ {
+          "name" : "MediaID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Media deleted successfully"
+          },
+          "404" : {
+            "description" : "Media not found"
           }
         }
       }
@@ -490,6 +735,82 @@
           },
           "Continut" : {
             "type" : "string"
+          },
+          "IsDeleted" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }
+      },
+      "MediaItem" : {
+        "type" : "object",
+        "properties" : {
+          "TipMedia" : {
+            "type" : "string",
+            "maxLength" : 10
+          },
+          "Cale" : {
+            "type" : "string",
+            "maxLength" : 255
+          },
+          "StireID" : {
+            "type" : "integer"
+          },
+          "IsDeleted" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }
+      },
+      "MediaUpload" : {
+        "type" : "object",
+        "properties" : {
+          "TipMedia" : {
+            "type" : "string",
+            "maxLength" : 10
+          },
+          "Cale" : {
+            "type" : "string",
+            "maxLength" : 255
+          },
+          "StireID" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "Jucator" : {
+        "type" : "object",
+        "properties" : {
+          "JucatorID" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "Nume" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "Prenume" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "Pozitie" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "Numar" : {
+            "type" : "integer"
+          },
+          "DataNasterii" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "Nationalitate" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "CaleImagine" : {
+            "type" : "string",
+            "maxLength" : 255
           },
           "IsDeleted" : {
             "type" : "boolean",
