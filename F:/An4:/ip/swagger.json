@@ -13,6 +13,12 @@
     "name" : "jucatori",
     "description" : "Operations for players content"
   }, {
+    "name" : "meciuri",
+    "description" : "Operations for matches content"
+  }, {
+    "name" : "clasament",
+    "description" : "Operations for leaderbord content"
+  }, {
     "name" : "stiri",
     "description" : "Operations for news content"
   }, {
@@ -24,6 +30,9 @@
   }, {
     "name" : "admin",
     "description" : "Operations of an admin account"
+  }, {
+    "name" : "sponsori",
+    "description" : "Operations for sponsors content"
   } ],
   "paths" : {
     "/jucatori" : {
@@ -639,6 +648,277 @@
           }
         }
       }
+    },
+    "/sponsori" : {
+      "get" : {
+        "tags" : [ "sponsori" ],
+        "summary" : "Get All Sponsors",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SponsorGet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "sponsori" ],
+        "summary" : "Create a Sponsor",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SponsorResponse"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Sponsor created successfully"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/sponsori/{SponsorID}" : {
+      "parameters" : [ {
+        "name" : "SponsorID",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      } ],
+      "get" : {
+        "tags" : [ "sponsori" ],
+        "summary" : "Get a Sponsor by ID",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SponsorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Sponsor not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "sponsori" ],
+        "summary" : "Update a Sponsor by ID",
+        "parameters" : [ {
+          "name" : "SponsorID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SponsorResponse"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Sponsor updated successfully"
+          },
+          "404" : {
+            "description" : "Sponsor not found"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "sponsori" ],
+        "summary" : "Delete a Sponsor by ID",
+        "parameters" : [ {
+          "name" : "SponsorID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Sponsor deleted successfully"
+          },
+          "404" : {
+            "description" : "Sponsor not found"
+          }
+        }
+      }
+    },
+    "/meciuri" : {
+      "get" : {
+        "tags" : [ "meciuri" ],
+        "summary" : "Get All Matches",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MeciResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "meciuri" ],
+        "summary" : "Create a Match",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeciGet"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Match created successfully"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/meciuri/{MeciID}" : {
+      "parameters" : [ {
+        "name" : "MeciID",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      } ],
+      "get" : {
+        "tags" : [ "meciuri" ],
+        "summary" : "Get a Match by ID",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeciGet"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Match not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "meciuri" ],
+        "summary" : "Update a Match by ID",
+        "parameters" : [ {
+          "name" : "MeciID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeciGet"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Match updated successfully"
+          },
+          "404" : {
+            "description" : "Match not found"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "meciuri" ],
+        "summary" : "Delete a Match by ID",
+        "parameters" : [ {
+          "name" : "MeciID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Match deleted successfully"
+          },
+          "404" : {
+            "description" : "Match not found"
+          }
+        }
+      }
+    },
+    "/clasament" : {
+      "get" : {
+        "tags" : [ "clasament" ],
+        "summary" : "Get the leaderbord",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Clasament"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -811,6 +1091,199 @@
           "IsDeleted" : {
             "type" : "boolean",
             "default" : false
+          }
+        }
+      },
+      "SponsorGet" : {
+        "type" : "object",
+        "properties" : {
+          "SponsorID" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "CaleImagine" : {
+            "type" : "string",
+            "maxLength" : 255
+          },
+          "NumeComplet" : {
+            "type" : "string",
+            "maxLength" : 100
+          },
+          "LinkSiteExtern" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "Editia" : {
+            "type" : "string",
+            "maxLength" : 100
+          },
+          "IsDeleted" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }
+      },
+      "SponsorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "CaleImagine" : {
+            "type" : "string",
+            "maxLength" : 255
+          },
+          "NumeComplet" : {
+            "type" : "string",
+            "maxLength" : 100
+          },
+          "LinkSiteExtern" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "Editia" : {
+            "type" : "string",
+            "maxLength" : 100
+          },
+          "IsDeleted" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }
+      },
+      "MeciResponse" : {
+        "type" : "object",
+        "properties" : {
+          "MeciID" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "DataMeci" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "EchipaID" : {
+            "type" : "integer"
+          },
+          "AdversarID" : {
+            "type" : "integer"
+          },
+          "Locatie" : {
+            "type" : "string",
+            "maxLength" : 100
+          },
+          "ScorEchipa" : {
+            "type" : "integer"
+          },
+          "ScorAdversar" : {
+            "type" : "integer"
+          },
+          "Editia" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "TipCampionat" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "LinkMeci" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "IsDeleted" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }
+      },
+      "MeciGet" : {
+        "type" : "object",
+        "properties" : {
+          "DataMeci" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "EchipaID" : {
+            "type" : "integer"
+          },
+          "AdversarID" : {
+            "type" : "integer"
+          },
+          "Locatie" : {
+            "type" : "string",
+            "maxLength" : 100
+          },
+          "ScorEchipa" : {
+            "type" : "integer"
+          },
+          "ScorAdversar" : {
+            "type" : "integer"
+          },
+          "Editia" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "TipCampionat" : {
+            "type" : "string",
+            "maxLength" : 50
+          },
+          "LinkMeci" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "IsDeleted" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }
+      },
+      "Clasament" : {
+        "type" : "object",
+        "properties" : {
+          "Pos" : {
+            "type" : "integer"
+          },
+          "NumeEchipa" : {
+            "type" : "string"
+          },
+          "Meciuri" : {
+            "type" : "integer"
+          },
+          "Victorii" : {
+            "type" : "integer"
+          },
+          "Egaluri" : {
+            "type" : "integer"
+          },
+          "Infrangeri" : {
+            "type" : "integer"
+          },
+          "GoluriMarcate" : {
+            "type" : "integer"
+          },
+          "GoluriPrimite" : {
+            "type" : "integer"
+          },
+          "DiferentaGoluri" : {
+            "type" : "integer"
+          },
+          "VictoriiAcasa" : {
+            "type" : "integer"
+          },
+          "EgaluriAcasa" : {
+            "type" : "integer"
+          },
+          "VictoriiDeplasare" : {
+            "type" : "integer"
+          },
+          "EgaluriDeplasare" : {
+            "type" : "integer"
+          },
+          "PuncteAcasa" : {
+            "type" : "integer"
+          },
+          "PuncteDeplasare" : {
+            "type" : "integer"
+          },
+          "Puncte" : {
+            "type" : "integer"
           }
         }
       }
